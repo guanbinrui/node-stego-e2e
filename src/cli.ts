@@ -28,23 +28,19 @@ const cli = meow(
 Options
   -h, --help       Print help message
   -v, --version    Print version message
-  -c, --create     Create suites from image database
-  -d, --validate   Validate suites and update status for each one
+      --generate   Generate suites from image database
+      --validate   Validate suites and update status for each one
 
 FB Options
   -n, --name       FB account name
   -p, --pass       FB account password
 
 Stego Options
+  -t, --tolerance  Specify the number to be added into wave amplitude: ${DEFAULT_TOLERANCE} (default).
   -s, --size       Size of encoding block with radix-2 required: ${DEFAULT_SIZE} (default).
-  -c, --copies     Encode duplicate messages in order to survive from
-                   compression attack with odd numbers required: ${DEFAULT_COPIES} (default).
-  -t, --tolerance  The robustness level to compression: ${DEFAULT_TOLERANCE} (default).
-  -g, --grayscale  Specify grayscale algorithm: 'NONE' (default), 'AVG',
-                   'LUMA', 'LUMA_II', 'DESATURATION', 'MAX_DE',
-                   'MIN_DE', 'MID_DE', 'R', 'G', 'B'.
-  -f, --transform  Specify transform algorithm: 'FFT1D' (default), 'FFT2D',
-                   'DCT'.
+  -c, --copies     Size of duplications with odd numbers required: ${DEFAULT_COPIES} (default).
+  -g, --grayscale  Specify grayscale algorithm: 'NONE' (default), 'AVG', 'LUMA', 'LUMA_II', 'DESATURATION', 'MAX_DE', 'MIN_DE', 'MID_DE', 'R', 'G', 'B'.
+  -f, --transform  Specify transform algorithm: 'FFT1D' (default), 'FFT2D', 'DCT'.
 
 Examples
   $ ${CLI_NAME} -c # create test suites
