@@ -1,22 +1,28 @@
 {
   "name": "fb-poster",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npx tsc -d",
     "start": "export NODE_ENV=production && npx ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "e2e": "./bin/e2e.js"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/meow": "^5.0.0",
     "@types/node": "^12.7.5",
     "@types/pg": "^7.11.2",
     "@types/request": "^2.48.3",
     "typescript": "^3.6.3"
   },
   "dependencies": {
+    "meow": "^5.0.0",
     "pg": "^7.12.1",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.0",

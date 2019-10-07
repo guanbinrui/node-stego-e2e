@@ -1,7 +1,7 @@
 import { Image } from '../entities/Image';
 import { VendorType } from '../entities/Vendor';
 
-export function constructImageUrl(image: Image) {
+export function createImageUrl(image: Image) {
   const { vid, vendor } = image;
 
   switch (vendor.name) {
