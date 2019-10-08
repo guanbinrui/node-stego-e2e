@@ -43,8 +43,8 @@ Stego Options
   -f, --transform  Specify transform algorithm: 'FFT1D' (default), 'FFT2D', 'DCT'.
 
 Examples
-  $ ${CLI_NAME} -c # create test suites
-  $ ${CLI_NAME} -v # validate test suites
+  $ ${CLI_NAME} --generate
+  $ ${CLI_NAME} --validate
 `,
   {
     flags: {
