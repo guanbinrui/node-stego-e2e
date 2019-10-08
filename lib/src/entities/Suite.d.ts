@@ -1,10 +1,11 @@
 import { BaseEntity } from 'typeorm';
-import { Image } from './Image';
-import { TransformAlgorithm } from 'node-stego/lib/transform';
 import { GrayscaleAlgorithm } from 'node-stego/lib/grayscale';
+import { TransformAlgorithm } from 'node-stego/lib/transform';
 export declare enum SuiteStatus {
     SUCCESS = "SUCCESS",
     FAIL = "FAIL",
+    QUALIFIED = "QUALIFIED",
+    MALFORMED = "MALFORMED",
     NOT_DEPEND = "NOT_DEPEND"
 }
 export declare class Suite extends BaseEntity {
@@ -21,5 +22,4 @@ export declare class Suite extends BaseEntity {
     version: string;
     transformAlgorithm: TransformAlgorithm;
     grayscaleAlgorithm: GrayscaleAlgorithm;
-    image: Image;
 }
