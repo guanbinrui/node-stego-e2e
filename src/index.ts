@@ -1,10 +1,10 @@
 import { createTypeormConn } from './helpers/createTypeormConn';
 import { Image } from './entities/Image';
-import { createSuiteFFT1D } from './helpers/createSuite';
+import { createSuite } from './helpers/createSuite';
 import { encode, decode, EncodeOptions } from 'node-stego/lib';
 import { uploadImage } from 'img-poster/lib/fb/uploadImage';
-import { downloadImage } from 'img-poster/lib/fb/downloadImage';
 import { getRequestPayload } from 'img-poster/lib/fb/getUserInfo';
+import { downloadImage } from 'img-poster/lib/helpers/downloadImage';
 import { Suite, SuiteStatus } from './entities/Suite';
 
 export interface Options {
@@ -24,7 +24,7 @@ export async function generateSuite(
   const payload = await getRequestPayload(name, pass);
 
   for (let image of images) {
-    const suite = createSuiteFFT1D(image, stegoOptions);
+    const suite = createSuite(image, stegoOptions);
     const vendorImgBuf = await downloadImage(suite.vendorUrl);
     const stegoImgBuf = await encode(vendorImgBuf, suite);
 

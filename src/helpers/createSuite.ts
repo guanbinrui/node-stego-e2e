@@ -5,7 +5,7 @@ import { Image } from '../entities/Image';
 import { createImageUrl } from './createImageUrl';
 import { EncodeOptions } from 'node-stego';
 
-export function createSuiteFFT1D(image: Image, options: EncodeOptions) {
+export function createSuite(image: Image, options: EncodeOptions) {
   const suite = new Suite();
 
   // apply stego options
