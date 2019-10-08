@@ -1,3 +1,4 @@
+import { In } from 'typeorm';
 import { EncodeOptions, decode, encode } from 'node-stego/lib';
 import { downloadImage } from 'img-poster/lib/helpers/downloadImage';
 import { getRequestPayload } from 'img-poster/lib/fb/getUserInfo';
@@ -6,12 +7,14 @@ import { uploadImage } from 'img-poster/lib/fb/uploadImage';
 import { createSuite } from './helpers/createSuite';
 import { createTypeormConn } from './helpers/createTypeormConn';
 import { Suite, SuiteStatus } from './entities/Suite';
+import { createImageUrl } from './helpers/createImageUrl';
 
 export interface Options {
   name: string;
   pass: string;
   generate: boolean;
   validate: boolean;
+  censor: boolean;
 }
 
 export async function generateSuite(
@@ -21,25 +24,69 @@ export async function generateSuite(
   await createTypeormConn();
 
   const images = await Image.find({ relations: ['vendor'] });
-  // const payload = await getRequestPayload(name, pass);
+  const payload = await getRequestPayload(name, pass);
 
-  console.log(images);
+  for (const image of images) {
+    const {
+      clip,
+      copies,
+      size,
+      tolerance,
+      grayscaleAlgorithm,
+      transformAlgorithm,
+    } = stegoOptions;
+    const suite =
+      (await Suite.findOne({
+        clip,
+        copies,
+        size,
+        tolerance,
+        grayscaleAlgorithm,
+        transformAlgorithm,
+        vendorUrl: createImageUrl(image),
+      })) || createSuite(image, stegoOptions);
 
-  // for (let image of images) {
-  //   const suite = createSuite(image, stegoOptions);
-  //   const vendorImgBuf = await downloadImage(suite.vendorUrl);
-  //   const stegoImgBuf = await encode(vendorImgBuf, suite);
+    if (suite.id) {
+      process.stderr.write('suite has been created:\n');
+      process.stderr.write(`${JSON.stringify(suite)}\n`);
+      continue;
+    }
+    try {
+      const vendorImgBuf = await downloadImage(suite.vendorUrl);
+      const stegoImgBuf = await encode(vendorImgBuf, suite);
 
-  //   suite.fbUrl = await uploadImage(stegoImgBuf, payload);
-  //   await suite.save();
-  // }
+      suite.fbUrl = await uploadImage(stegoImgBuf, payload);
+      await suite.save();
+    } catch (err) {
+      process.stderr.write(`${suite.vendorUrl}: ${err.message}\n`);
+    }
+  }
 }
 
-export async function validateSuite(stegoOptions: EncodeOptions) {
+export async function censorSuite() {
   await createTypeormConn();
 
   const suites = await Suite.find({
     status: SuiteStatus.NOT_DEPEND,
+  });
+
+  for (const suite of suites) {
+    const vendorImgBuf = await downloadImage(suite.vendorUrl);
+    const stegoImgBuf = await encode(vendorImgBuf, suite);
+
+    suite.status =
+      (await decode(stegoImgBuf, suite)) === suite.text
+        ? SuiteStatus.QUALIFIED
+        : SuiteStatus.MALFORMED;
+    await suite.save();
+  }
+}
+
+export async function validateSuite() {
+  await createTypeormConn();
+
+  const suites = await Suite.find({
+    status: In([SuiteStatus.NOT_DEPEND, SuiteStatus.QUALIFIED]),
   });
 
   for (const suite of suites) {

@@ -5,6 +5,7 @@
 ```bash
 npm link node-stego
 npm link img-poster
+npm link img-crawler
 npm link
 
 e2e -c # create test suites

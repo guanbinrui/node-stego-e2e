@@ -1,12 +1,4 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Image } from 'img-crawler/src/entities/Image';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { GrayscaleAlgorithm } from 'node-stego/lib/grayscale';
 import { TransformAlgorithm } from 'node-stego/lib/transform';
 import {
@@ -19,6 +11,8 @@ import {
 export enum SuiteStatus {
   SUCCESS = 'SUCCESS',
   FAIL = 'FAIL',
+  QUALIFIED = 'QUALIFIED',
+  MALFORMED = 'MALFORMED',
   NOT_DEPEND = 'NOT_DEPEND',
 }
 
@@ -62,8 +56,4 @@ export class Suite extends BaseEntity {
 
   @Column({ type: 'varchar', default: GrayscaleAlgorithm.NONE })
   grayscaleAlgorithm: GrayscaleAlgorithm;
-
-  @OneToOne(() => Image)
-  @JoinColumn()
-  image: Image;
 }

@@ -17,6 +17,5 @@ export function createSuite(image: Image, options: EncodeOptions) {
   suite.pass = createRandomIdentifier(10);
   suite.version = stegoVersion;
   suite.status = SuiteStatus.NOT_DEPEND;
-  suite.image = image;
   return suite;
 }

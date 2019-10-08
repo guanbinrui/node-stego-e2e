@@ -12,11 +12,12 @@ import {
 } from 'node-stego/lib/flag';
 import { GrayscaleAlgorithm } from 'node-stego/lib/grayscale';
 import { TransformAlgorithm } from 'node-stego/lib/transform';
-import { generateSuite, validateSuite } from '.';
+import { generateSuite, validateSuite, censorSuite } from '.';
 import {
   flags2Options as flags2OptionsE2E,
   normalizeFlags as normalizeFlagsE2E,
   validateFlags as validateFlagsE2E,
+  ActionType,
 } from './flag';
 import { CLI_NAME } from './constant';
 
@@ -27,8 +28,7 @@ const cli = meow(
 Options
   -h, --help       Print help message
   -v, --version    Print version message
-      --generate   Generate suites from image database
-      --validate   Validate suites and update status for each one
+  -a, --action     Specify action type: 'GENERATE' (default), 'VALIDATE', 'CENSOR'.
 
 FB Options
   -n, --name       FB account name
@@ -57,13 +57,10 @@ Examples
         default: false,
         alias: 'v',
       },
-      generate: {
-        type: 'boolean',
-        default: false,
-      },
-      validate: {
-        type: 'boolean',
-        default: false,
+      action: {
+        type: 'string',
+        default: ActionType.GENERATE,
+        alias: 'a',
       },
       name: {
         type: 'string',
@@ -116,7 +113,7 @@ export async function run() {
   const stegoFlags = normalizeFlagsStego(cli.flags);
   const e2eFlags = normalizeFlagsE2E(cli.flags);
 
-  if (stegoFlags.help || (!e2eFlags.generate && !e2eFlags.validate)) {
+  if (stegoFlags.help) {
     process.stdout.write(cli.help);
     process.exit(0);
   } else if (stegoFlags.version) {
@@ -134,9 +131,11 @@ export async function run() {
   const stegoOptions = flags2OptionsStego(stegoFlags);
   const e2eOptions = flags2OptionsE2E(e2eFlags);
 
-  if (e2eFlags.generate) {
+  if (e2eOptions.validate) {
+    validateSuite();
+  } else if (e2eOptions.censor) {
+    censorSuite();
+  } else if (e2eOptions.generate) {
     generateSuite(e2eOptions, stegoOptions);
-  } else if (e2eFlags.validate) {
-    validateSuite(stegoOptions);
   }
 }
