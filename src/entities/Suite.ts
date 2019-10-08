@@ -1,14 +1,14 @@
 import {
-  Entity,
   BaseEntity,
-  PrimaryGeneratedColumn,
   Column,
-  OneToOne,
+  Entity,
   JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Image } from './Image';
-import { TransformAlgorithm } from 'node-stego/lib/transform';
+import { Image } from 'img-crawler/src/entities/Image';
 import { GrayscaleAlgorithm } from 'node-stego/lib/grayscale';
+import { TransformAlgorithm } from 'node-stego/lib/transform';
 import {
   DEFAULT_CLIP,
   DEFAULT_COPIES,

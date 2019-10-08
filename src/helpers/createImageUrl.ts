@@ -1,5 +1,5 @@
-import { Image } from '../entities/Image';
-import { VendorType } from '../entities/Vendor';
+import { Image } from 'img-crawler/src/entities/Image';
+import { VendorType } from 'img-crawler/src/entities/Vendor';
 
 export function createImageUrl(image: Image) {
   const { vid, vendor } = image;

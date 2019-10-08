@@ -1,9 +1,9 @@
-import { Suite, SuiteStatus } from '../entities/Suite';
-import { version as stegoVersion } from 'node-stego/package.json';
-import { createRandomIdentifier } from './createRandomIdentifier';
-import { Image } from '../entities/Image';
-import { createImageUrl } from './createImageUrl';
 import { EncodeOptions } from 'node-stego';
+import { version as stegoVersion } from 'node-stego/package.json';
+import { Image } from 'img-crawler/src/entities/Image';
+import { Suite, SuiteStatus } from '../entities/Suite';
+import { createImageUrl } from './createImageUrl';
+import { createRandomIdentifier } from './createRandomIdentifier';
 
 export function createSuite(image: Image, options: EncodeOptions) {
   const suite = new Suite();

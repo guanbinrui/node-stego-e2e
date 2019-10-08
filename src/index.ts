@@ -1,10 +1,10 @@
-import { createTypeormConn } from './helpers/createTypeormConn';
-import { Image } from './entities/Image';
-import { createSuite } from './helpers/createSuite';
-import { encode, decode, EncodeOptions } from 'node-stego/lib';
-import { uploadImage } from 'img-poster/lib/fb/uploadImage';
-import { getRequestPayload } from 'img-poster/lib/fb/getUserInfo';
+import { EncodeOptions, decode, encode } from 'node-stego/lib';
 import { downloadImage } from 'img-poster/lib/helpers/downloadImage';
+import { getRequestPayload } from 'img-poster/lib/fb/getUserInfo';
+import { Image } from 'img-crawler/src/entities/Image';
+import { uploadImage } from 'img-poster/lib/fb/uploadImage';
+import { createSuite } from './helpers/createSuite';
+import { createTypeormConn } from './helpers/createTypeormConn';
 import { Suite, SuiteStatus } from './entities/Suite';
 
 export interface Options {
@@ -21,16 +21,18 @@ export async function generateSuite(
   await createTypeormConn();
 
   const images = await Image.find({ relations: ['vendor'] });
-  const payload = await getRequestPayload(name, pass);
+  // const payload = await getRequestPayload(name, pass);
 
-  for (let image of images) {
-    const suite = createSuite(image, stegoOptions);
-    const vendorImgBuf = await downloadImage(suite.vendorUrl);
-    const stegoImgBuf = await encode(vendorImgBuf, suite);
+  console.log(images);
 
-    suite.fbUrl = await uploadImage(stegoImgBuf, payload);
-    await suite.save();
-  }
+  // for (let image of images) {
+  //   const suite = createSuite(image, stegoOptions);
+  //   const vendorImgBuf = await downloadImage(suite.vendorUrl);
+  //   const stegoImgBuf = await encode(vendorImgBuf, suite);
+
+  //   suite.fbUrl = await uploadImage(stegoImgBuf, payload);
+  //   await suite.save();
+  // }
 }
 
 export async function validateSuite(stegoOptions: EncodeOptions) {
@@ -40,7 +42,7 @@ export async function validateSuite(stegoOptions: EncodeOptions) {
     status: SuiteStatus.NOT_DEPEND,
   });
 
-  for (let suite of suites) {
+  for (const suite of suites) {
     const stegoImgBuf = await downloadImage(suite.fbUrl);
     const text = await decode(stegoImgBuf, suite);
 

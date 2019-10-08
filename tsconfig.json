@@ -9,5 +9,9 @@
     "resolveJsonModule": true,
     "outDir": "lib/"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "node_modules/img-crawler/src/entities/*.ts"
+  ]
 }

@@ -1,25 +1,24 @@
 import meow from 'meow';
 import {
   DEFAULT_CLIP,
-  DEFAULT_SIZE,
   DEFAULT_COPIES,
+  DEFAULT_SIZE,
   DEFAULT_TOLERANCE,
 } from 'node-stego/lib/constant';
 import {
-  normalizeFlags,
-  flags2Options,
-  validateFlags,
+  flags2Options as flags2OptionsStego,
+  normalizeFlags as normalizeFlagsStego,
+  validateFlags as validateFlagsStego,
 } from 'node-stego/lib/flag';
 import { GrayscaleAlgorithm } from 'node-stego/lib/grayscale';
 import { TransformAlgorithm } from 'node-stego/lib/transform';
+import { generateSuite, validateSuite } from '.';
 import {
-  normalizeFlags as normalizeFlagsE2E,
   flags2Options as flags2OptionsE2E,
+  normalizeFlags as normalizeFlagsE2E,
   validateFlags as validateFlagsE2E,
 } from './flag';
-import { generateSuite, validateSuite } from '.';
-
-const CLI_NAME = 'e2e';
+import { CLI_NAME } from './constant';
 
 const cli = meow(
   `Usage
@@ -111,8 +110,10 @@ Examples
   }
 );
 
+export const version = process.env.npm_package_version;
+
 export async function run() {
-  const stegoFlags = normalizeFlags(cli.flags);
+  const stegoFlags = normalizeFlagsStego(cli.flags);
   const e2eFlags = normalizeFlagsE2E(cli.flags);
 
   if (stegoFlags.help || (!e2eFlags.generate && !e2eFlags.validate)) {
@@ -123,14 +124,14 @@ export async function run() {
     process.exit(0);
   }
 
-  const errMsg = validateFlags(stegoFlags) || validateFlagsE2E(e2eFlags);
+  const errMsg = validateFlagsStego(stegoFlags) || validateFlagsE2E(e2eFlags);
 
   if (errMsg) {
     process.stderr.write(`${errMsg}\n`);
     process.exit(1);
   }
 
-  const stegoOptions = flags2Options(stegoFlags);
+  const stegoOptions = flags2OptionsStego(stegoFlags);
   const e2eOptions = flags2OptionsE2E(e2eFlags);
 
   if (e2eFlags.generate) {
@@ -139,5 +140,3 @@ export async function run() {
     validateSuite(stegoOptions);
   }
 }
-
-export const version = process.env.npm_package_version;
