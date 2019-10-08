@@ -18,7 +18,7 @@ export function validateFlags({ name, pass }: Flags) {
     return '-n, --name is required';
   }
   if (!pass) {
-    return '-n, --pass is required';
+    return '-p, --pass is required';
   }
   return '';
 }
