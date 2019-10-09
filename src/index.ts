@@ -6,8 +6,8 @@ import { uploadImage } from 'img-poster/src/fb/uploadImage';
 import { Image } from 'img-crawler/src/entities/Image';
 import { createSuite } from './helpers/createSuite';
 import { createTypeormConn } from './helpers/createTypeormConn';
-import { Suite, SuiteStatus } from './entities/Suite';
 import { createImageUrl } from './helpers/createImageUrl';
+import { Suite, SuiteStatus } from './entities/Suite';
 
 export interface Options {
   name: string;
@@ -50,6 +50,13 @@ export async function generateSuite(
       process.stderr.write('suite has been created:\n');
       process.stderr.write(`${JSON.stringify(suite)}\n`);
       continue;
+    }
+
+    // prevent from duplication
+    try {
+      await suite.save();
+    } catch (err) {
+      process.stderr.write(`${suite.vendorUrl}: ${err.message}\n`);
     }
     try {
       const vendorImgBuf = await downloadImage(suite.vendorUrl);
