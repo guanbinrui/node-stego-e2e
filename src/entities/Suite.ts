@@ -1,12 +1,12 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { GrayscaleAlgorithm } from 'node-stego/lib/grayscale';
-import { TransformAlgorithm } from 'node-stego/lib/transform';
+import { GrayscaleAlgorithm } from 'node-stego/src/grayscale';
+import { TransformAlgorithm } from 'node-stego/src/transform';
 import {
   DEFAULT_CLIP,
   DEFAULT_COPIES,
   DEFAULT_SIZE,
   DEFAULT_TOLERANCE,
-} from 'node-stego/lib/constant';
+} from 'node-stego/src/constant';
 
 export enum SuiteStatus {
   SUCCESS = 'SUCCESS',

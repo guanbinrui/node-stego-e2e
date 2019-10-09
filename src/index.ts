@@ -1,9 +1,9 @@
 import { In } from 'typeorm';
-import { EncodeOptions, decode, encode } from 'node-stego/lib';
-import { downloadImage } from 'img-poster/lib/helpers/downloadImage';
-import { getRequestPayload } from 'img-poster/lib/fb/getUserInfo';
+import { EncodeOptions, decode, encode } from 'node-stego/src';
+import { downloadImage } from 'img-poster/src/helpers/downloadImage';
+import { getRequestPayload } from 'img-poster/src/fb/getUserInfo';
+import { uploadImage } from 'img-poster/src/fb/uploadImage';
 import { Image } from 'img-crawler/src/entities/Image';
-import { uploadImage } from 'img-poster/lib/fb/uploadImage';
 import { createSuite } from './helpers/createSuite';
 import { createTypeormConn } from './helpers/createTypeormConn';
 import { Suite, SuiteStatus } from './entities/Suite';

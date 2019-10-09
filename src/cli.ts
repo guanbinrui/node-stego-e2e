@@ -4,14 +4,14 @@ import {
   DEFAULT_COPIES,
   DEFAULT_SIZE,
   DEFAULT_TOLERANCE,
-} from 'node-stego/lib/constant';
+} from 'node-stego/src/constant';
 import {
   flags2Options as flags2OptionsStego,
   normalizeFlags as normalizeFlagsStego,
   validateFlags as validateFlagsStego,
-} from 'node-stego/lib/flag';
-import { GrayscaleAlgorithm } from 'node-stego/lib/grayscale';
-import { TransformAlgorithm } from 'node-stego/lib/transform';
+} from 'node-stego/src/flag';
+import { GrayscaleAlgorithm } from 'node-stego/src/grayscale';
+import { TransformAlgorithm } from 'node-stego/src/transform';
 import { generateSuite, validateSuite, censorSuite } from '.';
 import {
   flags2Options as flags2OptionsE2E,
