@@ -8,8 +8,8 @@ npm link img-poster
 npm link img-crawler
 npm link
 
-e2e -c # create test suites
-e2e -d # validate test suites
+e2e -a GENERATE # generate test suites
+e2e -a VALIDATE # validate test suites
 ```
 
 ## Repos
