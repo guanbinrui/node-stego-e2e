@@ -1,5 +1,5 @@
 import { Result } from 'meow';
-import { Flags as StegoFlags } from 'node-stego/lib/flag';
+import { Flags as StegoFlags } from 'node-stego/src/flag';
 import { Options } from '.';
 export declare enum ActionType {
     GENERATE = "GENERATE",

@@ -1,4 +1,4 @@
-import { EncodeOptions } from 'node-stego/lib';
+import { EncodeOptions } from 'node-stego/src';
 export interface Options {
     name: string;
     pass: string;

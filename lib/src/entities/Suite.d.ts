@@ -1,6 +1,6 @@
 import { BaseEntity } from 'typeorm';
-import { GrayscaleAlgorithm } from 'node-stego/lib/grayscale';
-import { TransformAlgorithm } from 'node-stego/lib/transform';
+import { GrayscaleAlgorithm } from 'node-stego/src/grayscale';
+import { TransformAlgorithm } from 'node-stego/src/transform';
 export declare enum SuiteStatus {
     SUCCESS = "SUCCESS",
     FAIL = "FAIL",
