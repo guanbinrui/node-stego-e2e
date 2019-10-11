@@ -6,6 +6,7 @@
 npm install
 git submodule foreach npm install
 
+npm build
 npm link
 
 e2e -a GENERATE # generate test suites
