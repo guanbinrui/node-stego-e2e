@@ -1,0 +1,9 @@
+[submodule "src/modules/node-stego"]
+	path = src/modules/node-stego
+	url = git@github.com:guanbinrui/node-stego.git
+[submodule "src/modules/img-poster"]
+	path = src/modules/img-poster
+	url = git@github.com:guanbinrui/img-poster.git
+[submodule "src/modules/img-crawler"]
+	path = src/modules/img-crawler
+	url = git@github.com:guanbinrui/img-crawler.git

@@ -1,13 +1,13 @@
 import { In } from 'typeorm';
-import { EncodeOptions, decode, encode } from 'node-stego/src';
-import { downloadImage } from 'img-poster/src/helpers/downloadImage';
-import { getRequestPayload } from 'img-poster/src/fb/getUserInfo';
-import { uploadImage } from 'img-poster/src/fb/uploadImage';
-import { Image } from 'img-crawler/src/entities/Image';
+import { EncodeOptions, decode, encode } from './modules/node-stego/src';
+import { downloadImage } from './modules/img-poster/src/helpers/downloadImage';
+import { getRequestPayload } from './modules/img-poster/src/fb/getUserInfo';
+import { uploadImage } from './modules/img-poster/src/fb/uploadImage';
+import { Image } from './modules/img-crawler/src/entities/Image';
+import { Suite, SuiteStatus } from './entities/Suite';
 import { createSuite } from './helpers/createSuite';
 import { createTypeormConn } from './helpers/createTypeormConn';
 import { createImageUrl } from './helpers/createImageUrl';
-import { Suite, SuiteStatus } from './entities/Suite';
 
 export interface Options {
   name: string;

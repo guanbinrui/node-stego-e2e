@@ -1,6 +1,6 @@
-import { EncodeOptions } from 'node-stego';
-import { version as stegoVersion } from 'node-stego/package.json';
-import { Image } from 'img-crawler/src/entities/Image';
+import { EncodeOptions } from '../modules/node-stego';
+import { version as stegoVersion } from '../modules/node-stego/package.json';
+import { Image } from '../modules/img-crawler/src/entities/Image';
 import { Suite, SuiteStatus } from '../entities/Suite';
 import { createImageUrl } from './createImageUrl';
 import { createRandomIdentifier } from './createRandomIdentifier';

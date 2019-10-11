@@ -3,9 +3,9 @@
 ## Setup
 
 ```bash
-npm link node-stego
-npm link img-poster
-npm link img-crawler
+npm install
+git submodule foreach npm install
+
 npm link
 
 e2e -a GENERATE # generate test suites

@@ -10,9 +10,5 @@
     "downlevelIteration": true,
     "outDir": "lib/"
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "node_modules/img-crawler/src/entities/*.ts"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/modules/node-stego/src/fft/index.js"]
 }

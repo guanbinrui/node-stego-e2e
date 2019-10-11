@@ -1,6 +1,6 @@
 import { createConnection, getConnectionOptions, Connection } from 'typeorm';
-import { Image } from 'img-crawler/src/entities/Image';
-import { Vendor } from 'img-crawler/src/entities/Vendor';
+import { Image } from '../modules/img-crawler/src/entities/Image';
+import { Vendor } from '../modules/img-crawler/src/entities/Vendor';
 import { Suite } from '../entities/Suite';
 
 export const createTypeormConn = async () => {
