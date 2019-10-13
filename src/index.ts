@@ -96,10 +96,19 @@ export async function validateSuite() {
       continue;
     }
 
-    const stegoImgBuf = await downloadImage(suite.mediaUrl);
-    const text = await decode(stegoImgBuf, suite);
+    try {
+      const stegoImgBuf = await downloadImage(suite.mediaUrl);
+      const text = await decode(stegoImgBuf, suite);
 
-    suite.status = text === suite.text ? SuiteStatus.SUCCESS : SuiteStatus.FAIL;
-    await suite.save();
+      suite.status =
+        text === suite.text ? SuiteStatus.SUCCESS : SuiteStatus.FAIL;
+      await suite.save();
+    } catch (err) {
+      suite.status = SuiteStatus.OBSOLETE;
+      await suite.save();
+      process.stderr.write(
+        `fail to validate suite: ${JSON.stringify(suite)}\n`
+      );
+    }
   }
 }

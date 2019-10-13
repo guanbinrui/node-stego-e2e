@@ -12,6 +12,7 @@ import { MediaType } from '../flag';
 export enum SuiteStatus {
   SUCCESS = 'SUCCESS',
   FAIL = 'FAIL',
+  OBSOLETE = 'OBSOLETE',
   QUALIFIED = 'QUALIFIED',
   MALFORMED = 'MALFORMED',
   NOT_DEPEND = 'NOT_DEPEND',
