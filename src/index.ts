@@ -89,6 +89,10 @@ export async function validateSuite() {
   });
 
   for (const suite of suites) {
+    if (!suite.fbUrl) {
+      continue;
+    }
+
     const stegoImgBuf = await downloadImage(suite.fbUrl);
     const text = await decode(stegoImgBuf, suite);
 
