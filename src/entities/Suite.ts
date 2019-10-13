@@ -7,6 +7,7 @@ import {
   DEFAULT_SIZE,
   DEFAULT_TOLERANCE,
 } from '../modules/node-stego/src/constant';
+import { MediaType } from '../flag';
 
 export enum SuiteStatus {
   SUCCESS = 'SUCCESS',
@@ -24,8 +25,11 @@ export class Suite extends BaseEntity {
   @Column({ type: 'varchar', default: SuiteStatus.NOT_DEPEND })
   status: SuiteStatus;
 
+  @Column({ default: MediaType.FB })
+  media: string;
+
   @Column()
-  fbUrl: string;
+  mediaUrl: string;
 
   @Column()
   vendorUrl: string;

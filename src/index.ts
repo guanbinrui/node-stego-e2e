@@ -10,11 +10,12 @@ import { createImageUrl } from './helpers/createImageUrl';
 import { Options } from './flag';
 
 export async function generateSuite(
-  { name, pass, media }: Options,
+  e2eOptions: Options,
   stegoOptions: EncodeOptions
 ) {
   await createTypeormConn();
 
+  const { name, pass, media } = e2eOptions;
   const images = await Image.find({ relations: ['vendor'] });
   const payload = await getUserInfo(media, name, pass);
 
@@ -29,6 +30,7 @@ export async function generateSuite(
     } = stegoOptions;
     const suite =
       (await Suite.findOne({
+        media,
         clip,
         copies,
         size,
@@ -36,7 +38,7 @@ export async function generateSuite(
         grayscaleAlgorithm,
         transformAlgorithm,
         vendorUrl: createImageUrl(image),
-      })) || createSuite(image, stegoOptions);
+      })) || createSuite(image, e2eOptions, stegoOptions);
 
     if (suite.id) {
       process.stderr.write('suite has been created:\n');
@@ -48,13 +50,13 @@ export async function generateSuite(
     try {
       await suite.save();
     } catch (err) {
-      process.stderr.write(`${suite.vendorUrl}: ${err.message}\n`);
+      process.stderr.write(`fail to save suite: ${err.message}\n`);
     }
     try {
       const vendorImgBuf = await downloadImage(suite.vendorUrl);
       const stegoImgBuf = await encode(vendorImgBuf, suite);
 
-      suite.fbUrl = await uploadImage(media, stegoImgBuf, payload);
+      suite.mediaUrl = await uploadImage(media, stegoImgBuf, payload);
       await suite.save();
     } catch (err) {
       await suite.remove();
@@ -90,11 +92,11 @@ export async function validateSuite() {
   });
 
   for (const suite of suites) {
-    if (!suite.fbUrl) {
+    if (!suite.mediaUrl) {
       continue;
     }
 
-    const stegoImgBuf = await downloadImage(suite.fbUrl);
+    const stegoImgBuf = await downloadImage(suite.mediaUrl);
     const text = await decode(stegoImgBuf, suite);
 
     suite.status = text === suite.text ? SuiteStatus.SUCCESS : SuiteStatus.FAIL;
