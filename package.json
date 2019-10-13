@@ -19,20 +19,22 @@
     "@types/meow": "^5.0.0",
     "@types/node": "^12.7.5",
     "@types/pg": "^7.11.2",
-    "@types/request": "^2.48.3",
     "@typescript-eslint/eslint-plugin": "^2.3.3",
     "@typescript-eslint/parser": "^2.3.3",
     "eslint": "^6.5.1",
     "typescript": "^3.6.3"
   },
   "dependencies": {
-    "canvas": "^2.6.0",
-    "image-size": "^0.8.3",
     "meow": "^5.0.0",
     "pg": "^7.12.1",
-    "puppeteer": "^1.20.0",
     "reflect-metadata": "^0.1.13",
-    "request": "^2.88.0",
     "typeorm": "^0.2.19"
+  },
+  "peerDependencies": {
+    "core-js": "3.x",
+    "canvas": "2.x",
+    "image-size": "0.x",
+    "request": "2.x",
+    "puppeteer": "1.x"
   }
 }
