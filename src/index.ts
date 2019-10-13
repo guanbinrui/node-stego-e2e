@@ -57,7 +57,8 @@ export async function generateSuite(
       suite.fbUrl = await uploadImage(media, stegoImgBuf, payload);
       await suite.save();
     } catch (err) {
-      process.stderr.write(`${suite.vendorUrl}: ${err.message}\n`);
+      await suite.remove();
+      process.stderr.write(`${suite.vendorUrl}: ${err}\n`);
     }
   }
 }
