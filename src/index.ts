@@ -1,30 +1,22 @@
 import { In } from 'typeorm';
 import { EncodeOptions, decode, encode } from './modules/node-stego/src';
 import { downloadImage } from './modules/img-poster/src/helpers/downloadImage';
-import { getRequestPayload } from './modules/img-poster/src/fb/getUserInfo';
-import { uploadImage } from './modules/img-poster/src/fb/uploadImage';
+import { getUserInfo, uploadImage } from './modules/img-poster/src';
 import { Image } from './modules/img-crawler/src/entities/Image';
 import { Suite, SuiteStatus } from './entities/Suite';
 import { createSuite } from './helpers/createSuite';
 import { createTypeormConn } from './helpers/createTypeormConn';
 import { createImageUrl } from './helpers/createImageUrl';
-
-export interface Options {
-  name: string;
-  pass: string;
-  generate: boolean;
-  validate: boolean;
-  censor: boolean;
-}
+import { Options } from './flag';
 
 export async function generateSuite(
-  { name, pass }: Options,
+  { name, pass, media }: Options,
   stegoOptions: EncodeOptions
 ) {
   await createTypeormConn();
 
   const images = await Image.find({ relations: ['vendor'] });
-  const payload = await getRequestPayload(name, pass);
+  const payload = await getUserInfo(media, name, pass);
 
   for (const image of images) {
     const {
@@ -62,7 +54,7 @@ export async function generateSuite(
       const vendorImgBuf = await downloadImage(suite.vendorUrl);
       const stegoImgBuf = await encode(vendorImgBuf, suite);
 
-      suite.fbUrl = await uploadImage(stegoImgBuf, payload);
+      suite.fbUrl = await uploadImage(media, stegoImgBuf, payload);
       await suite.save();
     } catch (err) {
       process.stderr.write(`${suite.vendorUrl}: ${err.message}\n`);

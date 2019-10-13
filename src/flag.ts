@@ -1,6 +1,5 @@
 import { Result } from 'meow';
 import { Flags as StegoFlags } from './modules/node-stego/src/flag';
-import { Options } from '.';
 
 export enum ActionType {
   GENERATE = 'GENERATE',
@@ -8,17 +7,32 @@ export enum ActionType {
   CENSOR = 'CENSOR',
 }
 
+export enum MediaType {
+  FB = 'FB',
+  TWITTER = 'TWITTER',
+}
+
 export interface Flags extends StegoFlags {
-  action: ActionType;
   name: string;
   pass: string;
+  action: ActionType;
+  media: MediaType;
+}
+
+export interface Options {
+  name: string;
+  pass: string;
+  media: MediaType;
+  generate: boolean;
+  validate: boolean;
+  censor: boolean;
 }
 
 export function normalizeFlags(flags: Result['flags']) {
   return flags as Flags;
 }
 
-export function validateFlags({ name, pass, action }: Flags) {
+export function validateFlags({ name, pass, action, media }: Flags) {
   if (!name && action === ActionType.GENERATE) {
     return '-n, --name is required';
   }
@@ -28,6 +42,9 @@ export function validateFlags({ name, pass, action }: Flags) {
   if (!Object.values(ActionType).includes(action)) {
     return 'unknown action type';
   }
+  if (!Object.values(MediaType).includes(media)) {
+    return 'unknown media type';
+  }
   return '';
 }
 
@@ -35,10 +52,12 @@ export function flags2Options({
   name = '',
   pass = '',
   action = ActionType.GENERATE,
+  media = MediaType.FB,
 }: Flags) {
   return {
     name,
     pass,
+    media,
     generate: action === ActionType.GENERATE,
     validate: action === ActionType.VALIDATE,
     censor: action === ActionType.CENSOR,

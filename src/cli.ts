@@ -18,6 +18,7 @@ import {
   normalizeFlags as normalizeFlagsE2E,
   validateFlags as validateFlagsE2E,
   ActionType,
+  MediaType,
 } from './flag';
 import { CLI_NAME } from './constant';
 
@@ -30,9 +31,10 @@ Options
   -v, --version    Print version message
   -a, --action     Specify action type: 'GENERATE' (default), 'VALIDATE', 'CENSOR'.
 
-FB Options
-  -n, --name       FB account name
-  -p, --pass       FB account password
+Media Options
+  -m, --media      Media tpye: FB (default), TWITTER
+  -n, --name       Media account name
+  -p, --pass       Media account password
 
 Stego Options
   -t, --tolerance  Specify the number to be added into wave amplitude: ${DEFAULT_TOLERANCE} (default).
@@ -61,6 +63,11 @@ Examples
         type: 'string',
         default: ActionType.GENERATE,
         alias: 'a',
+      },
+      media: {
+        type: 'string',
+        default: MediaType.FB,
+        alias: 'm',
       },
       name: {
         type: 'string',
