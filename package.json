@@ -28,7 +28,7 @@
     "meow": "^5.0.0",
     "pg": "^7.12.1",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.19"
+    "typeorm": "^0.2.25"
   },
   "peerDependencies": {
     "core-js": "3.x",
